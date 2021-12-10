@@ -1,0 +1,191 @@
+Debug the final solution in Pycharm possibly over the weekend or early next week to understand better what has been done and to prepare for the interview on Tuesday
+
+
+
+
+
+
+
+
+
+
+
+Geospatial Insight Machine Learning Engineer Practical Test
+Discussion point for the face-to-face interview
+
+
+Digital Signal Processing (Images/ Videos etc.)
+Machine Learning
+Deep Learning
+
+Goal: 1 Jupyter notebook with solutions to the tasks, supporting explanations, maybe even extra points for future development
+Ensure that the final Jupyter notebook is reset and cleaned up at the end and can be rerun from start to end properly
+Submit a zip file with the Jupyter notebook and the data files in their appropriate positions
+
+Notes: Stochastic gradient descent is the process of reducing the loss by adjusting the weights in the direction of decreasing gradient (hence the negative sign)
+Notes: Backpropagation computes the gradients ofall weights with respect to the loss using the chain rule
+Notes: For each batch in an epoch, the neural network model performs forward-propagation, then back-propagation to update the weights and then repeats with the next batch until the end of all the epochs
+
+
+Use anaconda (ended up not using this)
+Install gdal and rasterio 1.0 (didn't need to install gdal)
+
+Binary classifier for this given task
+
+
+Points of discussion or comments noted down myself
+
+1
+a) Debug and understand the numpy array
+b) Print these values and types in the Jupyter notebook and if anything else is noted mention it as a comment
+c) Mention the possibility of using different normalization techniques like standardisation or some other value (instead of min/max normalization)
+c) It could also be useful to mention that the benefit of using Deep Learning models is the prevention of having to manually feature engineer, but this isn't the emphasis here though as the values need to be in a range that neural nets prefer small values around 0 and 1
+c)
+
+d) Possibly make use of the matplotlib library and only extract the RGB part of the image
+
+2
+a) Scikit learn seems like the way to go here
+a) but it could be to show the similar of improved values of posing this as a neural network problem using keras
+
+Note: In the rough python file attached I show a run through of the various thoughts I had when it came to choosing an appropriate logistic regression package. For example, in it is code for using keras to create a logistic regression model. I ended up choosing sklearn due to it's performance
+
+
+
+b) I believe at the moment it is 9 (including the bias) or 8 (excluding the bias)
+b) This could also be proven by simply showing the model architecture using keras
+
+Note: The output of a logistic regression model can be represented in the form sigmoid(XW + b). This means that the parameters defining the model are W and b. In this problem, each sample has 8 features corresponding to each of the satellite bands and the bias is an additional value which serves as a constant that gets added to XW before going through the activation function, sigmoid. As a result, the total number of trainable parameters are 8+1 = 9. This can also be seen by the following printed outputs below:
+
+
+c) The target values 0/255 probably needs to be converted to 0/1, look unbalanced visually
+c) As a result it probably makes more sense to display the results as a confusion matrix and analyse it
+c) Also maybe try visualising and comparing the values so it is clear that 0 is either black or white and 1 is the other
+c) Precision (from the point of view of the model prediction: TP/TP+FP)) or Recall (from the point of view of the actual values (TP/TP+FN))
+c and d) Ensure the same normalisation used for the training set is what gets applied to the validation and testing inputs
+
+Note: Try using a metric that combines both precision and recall instead of just the average precision that was used here, for example, I could and probably should have used f1 score
+Note: Due to the imbalanced nature of the target image, with about 87% of the training target pixels being black (class 0 = notRooftop) and the rest being white (class 1 = rooftop). It seemed more useful to look at the average precision or average recall, rather than just accuracy which was already quite high (above 87% for a simple baseline model that just predicts all pixel outputs to be black/0). Finally, to decide betwen precision and recall, I decided to go for (average) precision, due to the comparatively lower values it had (72%). My thought process can be further seen with plots emphasising the data target distribution and more in the attached python file.
+
+
+d) Visualise the result appropriately, at the moment I'm thinking a black and white image as seen in the train/validations targets
+
+Note: Due to the plots above being pretty much all black, as the threshold of 0.5 is too strong at the moment, it appeared more appropriate to make use of the the actual non-clipped values of the logistic regression model to see better it's predictions for what is a rooftop and what isn't a rooftop.
+Note: The task of finding something versus ignoring all occurances appear to have different computational costs (not really sure how to prove it though)
+
+
+e) Here the word visualisation is used, possibly make use of a bar chart possibly or an 8 dimensional plot, quite difficult to do for me at the moment
+e) Higher the effect on the regression output XW the closer the output gets pushed to 1 if the value is positive or 0 if negative
+e) I think it is useful to emphasise the sigmoid graph and how different values affect it
+
+3
+c) Random weight initialisation like Glorot (and bengio) uniform (weight initialisation)
+
+Note: I think a useful improvement here would have been to initialise the bias with a constant instead of the random values
+
+
+
+d) It might be a nice extension to treat this as an image segmentation problem using a U-Net like architecture
+d) Different approaches classifying each "pixel" (8 channels not 3, but could try 3,4,5 even maybe 1 or 2)
+d) Another approach the window sliding approach (taking patches through the input image and classifying the centre pixel)
+d) Another approach similar to the window sliding approach (taking patches through the input image and generating a segmentation of that patch)
+d) Another approach taking the whole image as input and using a U-Net like architecture to produce a one-time segmentation of the whole image 
+
+Note: It would be useful to see what other filters look like visually in the same layer to further emphasise or maybe even disprove the reason given
+
+Note: Trying learning rates between 1e-5 and 1e-2, Adams default for sake of comparison is 1e-3, so testing the different learning rates could be useful
+Note: Too high a learning rate will explode the weights and too small a learning rate will not change the weights at all
+
+
+If time at the end maybe try the following Keras Code Examples
+1. https://blog.keras.io/how-convolutional-neural-networks-see-the-world.htm
+5. https://keras.io/examples/vision/oxford_pets_image_segmentation
+3. https://keras.io/examples/vision/metric_learning/
+4. https://keras.io/examples/vision/metric_learning_tf_similarity/
+2. https://keras.io/examples/vision/visualizing_what_convnets_learn/
+
+Note: I could improve it by replacing the hardcoded numbers with actual references to variables used instead ie 650*650 with the appropriate tuple element from the shape method
+
+
+From conversation with Dino:
+Segmentation models:
+	DeepLabV3+ fully convolutional architecture https://keras.io/examples/vision/deeplabv3_plus/
+
+
+
+Paying for courses to develop like regularly having time during the typical day where I have access to courses like Udacity
+Career development Computer Vision, Deep Learning, Machine Learning, Signal processing
+C++, AWS, Blockchain
+
+
+Note: nn.Linear
+
+
+Andrei: Web developer, Dev ops, architecture, planning
+Paul: background of company and what we do
+2012
+Satellite imagery
+Comidity and equity prediction: oil prices, car parks,
+Extensive backtest and manual
+Random projects
+West Midlands VC
+Software development work
+Insurance work
+Hurricane sandy - insurance work
+
+Web platform - crude and basis
+
+Comidity price investment
+Williams F1 partner - in camera footage, Car track position
+
+Machine Learning - Constrained, car counting, defined car park, dots and counting individual car
+Good results - 90% accuracy (how was that determined?)
+
+3 different human annotated
+
+Other ML models: Crude tanks (precision 0.01%), footprint extraction, 1.5 million buildings annotated
+Rooftype, Roof material
+
+Damage classifier: before disaster image and after disaster image, damage rating, no damage, low damage, high damage
+
+Role: Contract with Insurer, build a new damage classifier, swimming pool, solar panels, Microsoft Azure platform
+
+Insurance, Utilities, Green areas, Methane pollution and Air quality, Detecting pollution (Natural disasters), risk associated with loss, air pollution
+
+Renewable energy into ports, ships in harbour engine running
+
+Fundraiser (6 -10 million)
+
+Greenside of 
+ 
+
+Current office situation: Colsehill in Birmingham West Midlands (completely remote)
+
+3 staff for remote working
+
+Stay remote and remain remote through winter
+
+Once a month laptop, desk, chair, screen
+
+Laptop (machine learning test)
+
+Server: Graphics card
+
+Google cloud instance
+
+London
+
+Pension
+
+Optional health care scheme: 
+
+Bonus scheme: 5% performance, 5% bonus based
+
+Cloud services
+
+Research and Development: 
+
+4 -> 500 satellites
+
+1 month
+
