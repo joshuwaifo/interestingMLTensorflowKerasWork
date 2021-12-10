@@ -1,0 +1,309 @@
+6 years Machine Learning based experience (paid and unpaid)
+
+2nd year Warwick
+
+3rd year Warwick
+	CV: Image classification from scratch (Kaggle Fish Conversatory project)
+	CV: Data Augmentation for Image Classification (same Kaggle Fish Conservatory project)
+
+
+Masters year Edinburgh
+	CV: MNIST and eMNIST MLPs and CNNs
+	
+	DL: Autoencoder for recommendation embedding
+	CV: Image classification Painters by Number dataset, different task outputs (genre, artist, style)
+	
+Ikon Science
+	CV: 3D image classification (from Salt Bodies)
+	CV: Image segmentation with a U-Net like Architecture
+	CV: Grad-CAM class activation visualisation, producing a heatmap on the image to give context as to why a prediction was made
+	
+Move.ai year 1
+
+Move.ai year 2
+	CV: Facial keypoint detection using Transfer Learnikng
+
+Satelite imagery
+Image Segmentation footprint/
+Image processing
+
+
+Recommended books
+PyTorch - Modern Computer Vision with PyTorch
+Keras - Keras - Code Examples / Deep Learning with Python
+OpenCV - OpenCV tutorials / Programming with Computer Vision
+Scikit Learn - Sklearn cheatsheet
+
+
+Geospatial Insights
+
+Yolo
+Mask R-CNN
+Faster R-CNN
+Vanishing Gradients
+U-net
+SSD
+
+
+
+Appendix
+
+https://learning.oreilly.com/library/view/modern-computer-vision/9781839213472/fe89f66e-0b18-47c9-9eb0-bbc59b72b0d6.xhtml#uuid-dee6c9df-698e-429d-83e8-6f7ff8496b75
+
+Chapter 1 - Artificial Neural Network Fundamentals
+What are the various layers in a neural network?
+Input, Hidden, and Output Layers
+What is the output of a feed-forward propagation?
+Predictions that help in calculating loss value
+How is the loss function of a continuous dependent variable different from that of a binary dependent variable and also of a categorical dependent variable?
+MSE is the generally used loss function for a continuous dependent variable and binary cross-entropy for a binary dependent variable. Categorical cross-entropy is used for categorical dependent variables.
+What is stochastic gradient descent?
+It is a process of reducing loss, by adjusting weights in the direction of decreasing gradient
+What does a backpropagation exercise do?
+It computes gradients of all weights with respect to loss using the chain rule
+How does the weight update of all the weights across layers happen during back-propagation?
+It happens using the formula dW = W – alpha*(dW/dL)
+What all functions of a neural network happen within each epoch of training a neural network?
+For each batch in an epoch, perform forward-prop -> back prop -> update weights -> repeat with next batch until the end of all the epochs
+Why is training a network on a GPU faster when compared to training it on a CPU?
+More matrix operations can be performed in parallel on GPU hardware
+How does the learning rate impact training a neural network?
+Too high a learning rate will explode the weights, and too small a learning rate will not change the weights at all
+What is the typical value of the learning rate parameter?
+1e-2 to 1e-5
+
+Chapter 2 - PyTorch Fundamentals
+Why should we convert integer inputs into float values during training?
+nn.Linear (and almost all torch layers) only accepts floats as inputs
+What are the various methods to reshape a tensor object?
+reshape, view
+Why is computation faster with tensor objects over NumPy arrays?
+Capability to run on GPUs in parallel is only available on tensor objects
+What constitutes the init magic function in a neural network class?
+Calling super().__init__() and specifying the neural network layers
+Why do we perform zero gradients before performing back-propagation?
+To ensure gradients from previous calculations are flushed out
+What magic functions constitute the dataset class?
+__len__ and __getitem__
+How do we make predictions on new data points?
+By calling the model on the tensor as if it is a function – model(x)
+How do we fetch the intermediate layer values of a neural network?
+By creating a custom method
+How does the Sequential method help in simplifying defining the architecture of a neural network?
+We can avoid creating __init__ and the forward method by connecting a sequence of layers
+
+Chapter 3 - Building a Deep Neural Network with PyTorch
+What is the issue if the input values are not scaled in the input dataset?
+It takes longer to adjust weights to optimal value because input values vary so widely when they are unscaled
+What could be the issue if the background has a white pixel color while the content has a black pixel color when training a neural network?
+The neural network has to learn to ignore a majority of the not so useful content that is white in color
+What is the impact of batch size on the model's training time, accuracy over a given number of epochs?
+The larger the batch size more is the time taken to converge and more iterations required to attain a high accuracy
+What is the impact of the input value range on weight distribution at the end of the training?
+If the input value is not scaled to a certain range, certain weights can aid in over-fitting
+How does batch normalization help in improving accuracy?
+Just like how it is important that we scale the inputs for better convergence of the ANN, batch normalization scales the activations for better convergence of its next layer
+How do we know if a model has over-fit on training data?
+When validation loss is constant or keeps increasing with more epochs while training loss keeps decreasing over increasing epochs
+How does regularization help in avoiding over-fitting?
+Regularization techniques help the model to train in a constrained environment thereby forcing ANN to adjust its weights in a less biased fashion
+How do L1 and L2 regularization differ from each other?
+L1 = sum of the absolute value of weights, L2 = sum of the square of weights are added to the loss value in addition to the typical loss
+How does Dropout help in reducing over-fitting?
+By dropping some connections in ANN we are forcing networks to learn from fewer data. This forces the model to generalize.
+
+
+Chapter 4 - Introducing Convolutional Neural Networks
+Why is the prediction on a translated image low when using traditional neural networks?
+All images were centered in the original dataset, so the ANN learned the task for only centered images.
+How is Convolution done?
+Convolution is a multiplication between two matrices.
+How are optimal weight values in a filter identified?
+Through backpropagation.
+How does the combination of convolution and pooling help in addressing the issue of image translation?
+While convolution gives important image features, pooling takes the most prominent features in a patch of the image. This makes pooling a robust operation over the vicinity, i.e., even if something is translated by a few pixels, pooling will still return the expected output.
+What do the filters in layers closer to the input layer learn?
+Low-level features like edges.
+What functionality does pooling do that helps in building a model?
+It reduces input size by reducing feature map size and makes model translation invariant.
+Why can we not take the input image, flatten just like we did on the FashionMNIST dataset, and train a model for real-world images?
+If the image size is even modestly large, the number of parameters connecting two layers will be in millions.
+How does data augmentation help in improving image translation?
+Data augmentation creates copies of images that are translated by a few pixels. Thus the model is forced to learn the right classes even if the object in the image is off-center.
+In what scenario do we leverage collate_fn for dataloaders?
+When we need to perform batch level transformations, which are difficult/slow to perform in __getitem__.
+What is the impact of varying the number of training data points on classification accuracy on the validation dataset?
+In general, the larger the dataset size, the better will the model accuracy.
+
+Chapter 5 - Transfer Learning for Image Classification
+What are VGG and ResNet pre-trained architectures trained on?
+The images in the Imagenet dataset.
+Why does VGG11 have an inferior accuracy to VGG16?
+VGG11 has fewer layers when compared to VGG16.
+What does the number 11 in VGG11 represent?
+11 layers.
+What is residual in the residual network?
+The layer returns input in addition to the layer's transformation.
+What is the advantage of a residual network?
+It helps in avoiding vanishing gradients and also helps in increasing model depth.
+What are the various popular pre-trained models?
+VGG, ResNet, Inception, AlexNet.
+During transfer learning, why should images be normalized with the same mean and standard deviation as those which were used during training of a pre-trained model?
+Models are trained such that they expect input images to be normalized with a specific mean and standard deviation.
+Why do we freeze certain parameters in a model?
+We freeze so that the parameters will not be updated during backpropagation. They are not updated as they are already well trained.
+How do we know the various modules present in a pre-trained model?
+print(model)
+How do we train a model which predicts categorical and numeric values together?
+By having multiple prediction heads and training with a separate loss for each head.
+Why might age and gender prediction code not work always for an image of your own interest if we execute the same code as we wrote in the age and gender estimation section?
+An Image that does not have similar distribution as training data can give unexpected results.
+How can we further improve the accuracy of the facial key-points recognition model that we wrote in the facial keypoints prediction section?
+We can add color and geometric augmentations to the training process.
+
+Chapter 6 - Practical Aspects of Image Classification
+How are class activation maps obtained?
+Refer to the 8 steps provided in the Generating CAMs section
+How do batch normalization and data augmentation help when training a model?
+They help reduce over-fitting
+What are the common reasons why a CNN model overfits?
+No batch normalization, data augmentation, dropout
+What are the various scenarios where the CNN model works with training and validation data at the data scientists' end but not in the real world?
+Real-world data can have a different distribution from the data used to train and validate the model. Additionally, the model might have over-fitted on training data
+What are the various scenarios where we leverage OpenCV packages?
+While working in constrained environments, and also when speed to infer is more important
+
+Chapter 7 - Basics of Object Detection
+How does the region proposal technique generate proposals?
+It identifies regions that are similar in color, texture, size, and shape.
+How is IoU calculated if there are multiple objects in an image?
+IoU is calculated for each object with the ground truth, using Intersection Over Union metric
+Why does R-CNN take a long time to generate predictions?
+Because we create as many forward propagations as there are proposals
+Why is Fast R-CNN faster when compared to R-CNN?
+For all proposals, extracting the feature map from the VGG backbone is common. This reduces almost 90% of the computations as compared to Fast RCNN
+How does RoI Pooling work?
+All the selectivesearch crops are passed through adaptive pooling kernel so that the final output is of the same size
+What is the impact of not having multiple layers, post obtaining feature map, when predicting the bounding box corrections?
+You might not notice that the model did not learn to predict the bounding boxes accurately
+Why do we have to assign a higher weightage to regression loss when calculating overall loss?
+Classification loss is cross-entropy which is generally of the order log(n) resulting in outputs that can have a high range. However, bounding box regression losses are between 0 and 1. Hence regression losses have to be scaled up.
+How does Non-max suppression work?
+By combining boxes of the same classes and with high IoUs, we eliminate redundant bounding box predictions.
+
+Chapter 8 - Advanced Object Detection
+Why is Faster R-CNN faster when compared to Fast R-CNN?
+We do not need to feed a lot of unnecessary proposals every time using the selectivesearch technique. Instead, Faster R-CNN automatically finds them using the region proposal network.
+How are YOLO and SSD faster when compared to Faster R-CNN?
+We don't need to rely on a new proposal network. The network directly finds the proposals in a single go.
+What makes YOLO and SSD single shot detector algorithms?
+Networks predict all the proposals and predictions in one shot
+What is the difference between the objectness score and class score?
+Objectness identifies if an object exists or not. But class score predicts what is the class for an anchor box whose objectness is non zero
+
+Chapter 9 - Image Segmentation
+How does up-scaling help in U-Net architecture?
+Upscaling helps the feature map to increase in size so that the final output is the same size as the input size.
+Why do we need to have a fully convolutional network in U-Net?
+Because the outputs are also images, and it is difficult to predict an image shaped tensor using the Linear layer.
+How does RoI Align improve over RoI pooling in Mask R-CNN?
+RoI Align takes offsets of predicted proposals to fine-align the feature map.
+What is the major difference between U-Net and Mask R-CNN for segmentation?
+U-Net is fully convolutional and with a single end2end network, whereas Mask R-CNN uses mini networks such as Backbone, RPN, etc to do different tasks. Mask R-CNN is capable of identifying and separating several objects of the same type, but U-Net can only identify (but not separate them into individual instances).
+What is instance segmentation?
+If there are different objects of the same class in the same image then each such object is called an instance. Applying image segmentation to predict, at a pixel level, all the instances separately is called instance segmentation.
+
+Chapter 11 - Autoencoders and Image Manipulation
+What is an encoder in autoencoder?
+A smaller neural network that converts an image into a vector representation.
+What loss function does autoencoder optimize for?
+Pixel level mean square error, directly comparing prediction with input.
+How do autoencoders help in grouping similar images?
+Similar images will return similar encodings, which are easier to cluster.
+When is the Convolutional autoencoder useful?
+When the inputs are images.
+Why do we get non-intuitive images if we randomly sample from vector space of embeddings obtained from vanilla/convolutional autoencoder?
+The range of values in encodings is unconstrained, so proper outputs are highly dependent on the right range of values. Random sampling, in general, assumes a 0 mean and 1 standard deviation.
+What are the loss functions that the Variational autoencoder optimizes for?
+Pixel level MSE and KL-Divergence of the distribution of mean and standard deviation from the encoder.
+How does the Variational autoencoder overcome the limitation of vanilla/ convolutional auto-encoders to generate new images?
+By constraining predicted encodings to have a normal distribution, all encodings fall in the region of mean-0 and standard deviation 1, which is easy to sample from.
+During an adversarial attack, why do we modify the input image pixels and not the weight values?
+We do not have control over the neural network in adversarial attacks.
+In a neural style transfer what are the losses that we optimize for?
+Perceptual (VGG) loss of generated image with the original image, and the style-loss coming from the gram matrices of generated and style images.
+Why do we consider the activation of different layers and not the original image when calculating style and content loss?
+Using more intermediate layers ensures, the generated image is preserving finer details about the image. Also, using more losses makes the gradient ascent more stable.
+Why do we consider gram matrix loss and not the difference between images when calculating style loss?
+Gram matrix gives an indication of the style of the image, i.e., how the textures shapes, and colors are arranged and will ignore the actual content. That is why it is more convenient for style loss.
+Why do we warp images while building a model to generate deep fakes?
+Warping images helps act as a regularize. Further, it helps in generating as many images as required.
+
+Chapter 12 - Image Generation Using GANs
+What happens if the learning rate of generator and discriminator models is high?
+Empirically, it is observed that the model stability is lower.
+In a scenario where the generator and discriminator are very well trained, what is the probability of a given image being real?
+0.5.
+Why do we use convtranspose2d in generating images?
+We cannot upscale/ generate images using a linear layer.
+Why do we have embeddings with high embedding size than the number of classes in Conditional GANs?
+Using more parameters gives the model more degrees of freedom to learn the important features of each class.
+How can we generate images of men that have a beard?
+By using a conditional GAN. Just like we had male and female images, we can have bearded males and other such classes while training model.
+Why do we have Tanh activation at the last layer in the generator and not ReLU or Sigmoid?
+The pixel range of normalized images is [-1,1] and hence we use Tanh
+Why did we get realistic images even though we did not de-normalize the generated data?
+Even though pixel values are not between [0,255], the relative values are sufficient for the make_grid utility to de-normalize input
+What happens if we do not crop faces corresponding to images before training the GAN?
+If there is too much background, the GAN can get wrong signals as to what is a face and what is not, so it might focus on generating more realistic backgrounds
+Why do the weights of the discriminator not get updated when the training generator does (as generator_train_step function involves the discriminator network)?
+It is a step by step process. When updating the generator we assume the discriminator is able to do its best.
+Why do we fetch loss on real and fake images while training discriminator but only the loss on fake images while training generator?
+Because whatever generator creates are only fake images.
+
+Chapter 13 - Advanced GANs to Manipulate Images
+Why do we need a Pix2Pix GAN where a supervised learning algorithm like U-Net could have worked to generate images from contours?
+U-net only uses pixel-level loss during training. We needed pix2pix since there is no loss for realism when a U-net generates images.
+Why do we need to optimize for 3 different loss functions in CycleGAN?
+Answer provided in the 7 points in CycleGAN section.
+How do the tricks leverage in ProgressiveGAN help in building a StyleGAN?
+ProgressiveGAN helps the network to learn a few upsampling layers at a time so that when the image has to be increased in size, the networks responsible for generating current size images are optimal.
+How do we identify latent vectors corresponding to a given custom image?
+By adjusting the randomly generated noise in such a way that the MSE loss between the generated image and the image of interest is as minimal as possible.
+
+Chapter 14 - Training with Minimal Data Points
+How are pre-trained word vectors obtained?
+From an existing database such as GLOVE or word2vec
+How do we map from an image feature embedding to word embedding in Zero-shot learning?
+By creating a suitable neural network that returns a vector of the same shape as word-embedding and training with mse-loss (comparing prediction with actual word-embedding)
+Why is the Siamese network called so?
+Because we always produce and compare two outputs with each other, for identicalness. Siamese stands for twins.
+How does the Siamese network come up with the similarity between the two images?
+The loss function forces the network to predict that the outputs have a smaller distance if the images are similar.
+
+Chapter 15 - Combining Computer Vision and NLP Techniques
+Why are CNN and RNN combined in image captioning?
+CNN is needed for capturing image features, whereas, RNN is needed for creating the language output.
+Why are start and end tokens provided in image captioning but not in handwritten transcription?
+CTC loss does not need such tokens, and moreover, in OCR, we generate tokens in all time-steps in one shot.
+Why is the CTC loss function leveraged in handwriting transcription?
+We cannot delineate timesteps in the image. CTC takes care of aligning key image features with timesteps.
+How do transformers help in object detection?
+By treating anchor boxes as embedding inputs for transformer decoders DETR learns dynamic anchor boxes thereby helping object detection.
+
+Chapter 16 - Combining Computer Vision and Reinforcement Learning
+How is the value calculated for a given state?
+By computing the expected reward at that state
+How is the Q-table populated?
+By computing expected reward for all states
+Why do we have a discount factor in state action value calculation?
+Due to uncertainty, we are unsure of how the future might work. Hence we reduce future rewards' weightage which is done by the way of discounting
+What is the need for an exploration-exploitation strategy?
+Only exploitation will make the model stagnant and predictable and hence model should be able to explore and find unseen steps that can be even more rewarding than what the model already has already learned.
+What is the need for Deep Q-Learning?
+We let the neural network learn the likely reward system without the need for costly algorithms that may take too much time or demand visibility of the entire environment.
+How is the value of a given state action combination calculated using Deep Q-Learning?
+It is simply the output of the neural network. The input is the state and the network predicts one expected reward for every action in the given state.
+What are the possible actions in CARLA environment?
+accelerate – [-1,0,1] (brake, no-acceleration, accelerate)
+steer – [-1,0,1] (left, no-steer, right)
